@@ -1,9 +1,32 @@
 trigger:
-- main
+- main  # This triggers the pipeline on every push to main branch
 
 pool:
-  name: SelfHosted
+  name: SelfHosted  # Uses your self-hosted agent pool
+
+variables:
+  buildConfiguration: 'Release'
 
 steps:
-- script: echo "Hello from Self-hosted Agent"
-  displayName: 'Run a simple echo script'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'  # Adjust to your actual SDK version
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '**/*.sln'  # Automatically finds the .sln file
+
+- task: VSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    platform: 'Any CPU'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: 'Any CPU'
+    configuration: '$(buildConfiguration)'
