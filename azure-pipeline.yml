@@ -3,8 +3,8 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- main  # Change if your default branch is different
+#trigger:
+#- main  # Change if your default branch is different
 
 pool:
   vmImage: 'windows-latest'
