@@ -1,0 +1,9 @@
+trigger:
+- main
+
+pool:
+  name: SelfHosted
+
+steps:
+- script: echo "Hello from Self-hosted Agent"
+  displayName: 'Run a simple echo script'
